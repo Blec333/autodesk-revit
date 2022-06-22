@@ -1,0 +1,307 @@
+{
+  "Uuid": "2b411336-a253-4256-b190-8440c50ee079",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "Алгоритм сортировки элементов",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Включить поддержку Python и загрузить библиотеку DesignScript\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nfrom Revit.Elements import*\r\n\r\n# Введенные в этом узле данные сохраняется в виде списка в переменных IN.\r\ndataEnteringNode = IN\r\n\r\nElements=IN[0]\r\nLocationPoints=[]\r\nfor i in Elements:\r\n\tLocationPoints.append(i.GetLocation())\r\nDistance=[]\r\nSortedPoints=[]\r\n\r\nj=0\r\nSortedPoints.append(LocationPoints.pop())\r\n\r\nwhile len(LocationPoints)>0 or j>100:\r\n\tMinDist = 49900\r\n\tIndex = -1\r\n\t#reverse = False\r\n\tfor i in range(len(LocationPoints)):\r\n\t\tDist1 = SortedPoints[0].DistanceTo(LocationPoints[i])\r\n\t\tDist2 = SortedPoints[len(SortedPoints)-1].DistanceTo(LocationPoints[i])\r\n\t\tif Dist1 < MinDist:\r\n\t\t\tMinDist = Dist1\r\n\t\t\tIndex = i\r\n\t\t\treverse = True\r\n\t\tif Dist2 < MinDist:\r\n\t\t\tMinDist = Dist2\r\n\t\t\tIndex = i\r\n\t\t\treverse = False\r\n\tif Index == -1:\r\n\t\tbreak\t\t\r\n\telse:\r\n\t\tif reverse==True:\t\r\n\t\t\tSortedPoints.reverse()\t\r\n\t\tSortedPoints.append(LocationPoints[Index])\r\n\t\tdel LocationPoints[Index]\r\n\tj=j+1\r\n\t\r\n# Разместите код под этой строкой\r\n\r\n# Назначьте вывод переменной OUT.\r\nOUT = SortedPoints",
+      "VariableInputPorts": true,
+      "Id": "74b7b862e39c4fd6b541a3c3702d837f",
+      "Inputs": [
+        {
+          "Id": "c6d4b084e8394a1c89933fedfad50616",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a9fbc53bce6a44d6bf4541553dbc26d6",
+          "Name": "OUT",
+          "Description": "Результат сценария Python",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Выполнение встроенного сценария IronPython."
+    },
+    {
+      "ConcreteType": "Dynamo.Nodes.DSModelElementsSelection, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a2d2",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a2e3",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a2e6",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a2e9",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a2ec",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a2ef",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a2f2",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a2f5",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a2f8",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a2fb",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a2fe",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a301",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a304",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a307",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a30a",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a30d",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a310",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a313",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a316",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a319",
+        "c1023e81-5aab-424c-a837-9c5bb2a1c34f-0003a31c"
+      ],
+      "Id": "2ea64851ae0c4ff59cc850fcff9f2e0d",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4bbaa9dc7f7b47dca153ded11e5bcc79",
+          "Name": "Elements",
+          "Description": "Выбранные элементы.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.ModelCurve.ByCurve@Autodesk.DesignScript.Geometry.Curve",
+      "Id": "e8f9e944f11c4d4c8b50a65c2cc1d12a",
+      "Inputs": [
+        {
+          "Id": "7fe3dbc549cc4b28a4536ee1594f0653",
+          "Name": "curve",
+          "Description": "Curve",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b7270920cce642f4b14297293338308d",
+          "Name": "ModelCurve",
+          "Description": "ModelCurve",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Построение элемента Revit ModelCurve на основе кривой\n\nModelCurve.ByCurve (curve: Curve): ModelCurve"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.PolyCurve.ByPoints@Autodesk.DesignScript.Geometry.Point[],bool",
+      "Id": "40f1efd286474be28571833f26adf60b",
+      "Inputs": [
+        {
+          "Id": "6289bdd0e2bb4989b3476a20493ae217",
+          "Name": "points",
+          "Description": "Точки для создания PolyCurve\n\nPoint[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6536df6d01414ce987fd9bb6313d51f3",
+          "Name": "connectLastToFirst",
+          "Description": "создание закрытой или открытой PolyCurve\n\nbool\nЗначение по умолчанию : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "223eda4b8f6845baae8aa0cc352d93fe",
+          "Name": "PolyCurve",
+          "Description": "PolyCurve",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Создайте элемент PolyCurve, соединив точки. Чтобы замкнуть PolyCurve, задайте для параметра «connectLastToFirst» значение true.\n\nPolyCurve.ByPoints (points: Point[], connectLastToFirst: bool = false): PolyCurve"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Geometry.Explode",
+      "Id": "728379a095174571817ebc7fcbf3bfcb",
+      "Inputs": [
+        {
+          "Id": "3a6d2575f8b04576900bd852a1d55365",
+          "Name": "geometry",
+          "Description": "Autodesk.DesignScript.Geometry.Geometry",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3ca75c8bd7124fdf9e12049c152eba53",
+          "Name": "Geometry[]",
+          "Description": "Geometry[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Разделение составных или неразделенных элементов на компоненты.\n\nGeometry.Explode ( ): Geometry[]"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "a9fbc53bce6a44d6bf4541553dbc26d6",
+      "End": "6289bdd0e2bb4989b3476a20493ae217",
+      "Id": "d824770b9b8f491d8fc83e106bb04420"
+    },
+    {
+      "Start": "4bbaa9dc7f7b47dca153ded11e5bcc79",
+      "End": "c6d4b084e8394a1c89933fedfad50616",
+      "Id": "39b07f2d2231436481d93ffdecd4aa75"
+    },
+    {
+      "Start": "223eda4b8f6845baae8aa0cc352d93fe",
+      "End": "3a6d2575f8b04576900bd852a1d55365",
+      "Id": "7d6df933f008415ba6be33835ce4dd79"
+    },
+    {
+      "Start": "3ca75c8bd7124fdf9e12049c152eba53",
+      "End": "7fe3dbc549cc4b28a4536ee1594f0653",
+      "Id": "c3944db857c14a2cb09589b58a76d8b9"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 100.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.2.6826",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Фоновый просмотр",
+      "EyeX": 26765.583733257168,
+      "EyeY": 20125.280195942149,
+      "EyeZ": -13598.727646862491,
+      "LookX": -12151.631693683197,
+      "LookY": -18350.287731944569,
+      "LookZ": 16917.407827590017,
+      "UpX": -0.28283333887440321,
+      "UpY": 0.87461970713939785,
+      "UpZ": 0.39375839077352315
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "74b7b862e39c4fd6b541a3c3702d837f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 815.20803650796631,
+        "Y": 499.96088675910846
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Select Model Elements",
+        "Id": "2ea64851ae0c4ff59cc850fcff9f2e0d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 466.20700184225137,
+        "Y": 484.04846255523756
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "ModelCurve.ByCurve",
+        "Id": "e8f9e944f11c4d4c8b50a65c2cc1d12a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1598.26773989518,
+        "Y": 474.8813290840277
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "PolyCurve.ByPoints",
+        "Id": "40f1efd286474be28571833f26adf60b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1002.2721131440906,
+        "Y": 484.92057277226809
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Geometry.Explode",
+        "Id": "728379a095174571817ebc7fcbf3bfcb",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1327.5697345105684,
+        "Y": 475.96991593495653
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "84e9440e8cad4f4cbcee5b8a9aef416b",
+        "Title": "<Нажмите здесь, чтобы изменить заголовок группы>",
+        "Nodes": [
+          "74b7b862e39c4fd6b541a3c3702d837f",
+          "2ea64851ae0c4ff59cc850fcff9f2e0d",
+          "e8f9e944f11c4d4c8b50a65c2cc1d12a",
+          "40f1efd286474be28571833f26adf60b",
+          "728379a095174571817ebc7fcbf3bfcb"
+        ],
+        "Left": 456.20700184225137,
+        "Top": 421.8813290840277,
+        "Width": 1377.0607380529286,
+        "Height": 171.07955767508076,
+        "FontSize": 36.0,
+        "InitialTop": 474.8813290840277,
+        "InitialHeight": 240.16713347120992,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -75.794766502431344,
+    "Y": 14.932524945183616,
+    "Zoom": 0.53000497376066014
+  }
+}
